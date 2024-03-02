@@ -1,5 +1,6 @@
 package org.myungkeun.blog.service.impl;
 
+import com.springboot.blog.exception.ResourceNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.myungkeun.blog.entity.Post;
 import org.myungkeun.blog.payload.PostDto;
@@ -44,7 +45,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDto getPostById(String id) {
-        return null;
+        Post post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        return mapToDto(post);
     }
 
     @Override
